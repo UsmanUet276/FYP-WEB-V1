@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ΔSKYLA - Your AI Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "custom-cream": "#FDF6EC",
+                        "custom-yellow": "#FFD84D",
+                        "custom-orange": "#FFB800",
+                        "custom-teal": "#2A9D8F",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .superpower-card {
+            border: 2px solid black;
+            border-radius: 20px;
+            background-color: rgba(253, 246, 236, 0.6);
+            padding: 24px;
+            position: relative;
+        }
+        .number-badge {
+            width: 32px;
+            height: 32px;
+            border: 2px solid black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            position: absolute;
+            top: -16px;
+            left: -16px;
+            font-weight: 600;
+        }
+        .chat-bubble {
+            border-radius: 20px;
+            padding: 16px;
+            max-width: 80%;
+        }
+        .user-bubble {
+            background-color: #ffd84d;
+            align-self: flex-start;
+        }
+        .ai-bubble {
+            background-color: white;
+            align-self: flex-end;
+            border: 2px solid black;
+        }
+        .faq-item {
+            border: 2px solid black;
+            border-radius: 16px;
+            padding: 20px;
+            background-color: #fdf6ec;
+            transition: all 0.3s ease;
+        }
+        .faq-toggle {
+            width: 36px;
+            height: 36px;
+            background-color: #2a9d8f;
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        .title-stroke {
+            -webkit-text-stroke: 2px black;
+            color: white !important;
+        }
+        .background-blob {
+            position: absolute;
+            background: rgba(255, 216, 77, 0.3);
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 1;
+        }
+        .feature-card {
+            background: white;
+            border: 2px solid black;
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .card-font {
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.2;
+        }
+        .mascot {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-50%, -55%); }
+        }
+    </style>
+</head>
+<body class="bg-custom-cream">
+    <header class="container mx-auto px-4 py-4">
+        <nav class="flex items-center justify-between">
+            <a href="#" class="text-xl font-bold">ΔSKYLA</a>
+            <div class="flex items-center gap-8">
+                <div class="hidden md:flex gap-6">
+                    <a href="#features" class="text-sm font-medium hover:text-custom-teal">Features</a>
+                    <a href="#faq" class="text-sm font-medium hover:text-custom-teal">FAQ</a>
+                    <a href="#contact" class="text-sm font-medium hover:text-custom-teal">Contact</a>
+                </div>
+                <button id="loginBtn" class="bg-custom-yellow text-black hover:bg-custom-yellow/90 px-6 py-2 rounded-full font-medium border-2 border-black">
+                    Login
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container mx-auto px-4 pt-16 pb-20 md:pt-24">
+            <div class="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+                <div class="space-y-8">
+                    <h1 class="font-extrabold text-[80px] leading-[90px] tracking-tight text-custom-orange text-left" style="font-family: 'Nunito', sans-serif; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; font-weight: 900;">
+                        Meet Your New Best Friend - Anytime, Anywhere
+                    </h1>
+                    <p class="font-open-sans font-normal text-[18px] leading-[22px] text-gray-600 max-w-[600px]">
+                        Join the fun and make every conversation a delightful experience. Let's get you started on your journey to better, meaningful connections.
+                    </p>
+                    <button class="bg-custom-yellow text-black hover:bg-custom-yellow/90 px-6 py-2 text-lg rounded-full font-medium border border-black transition-transform transform hover:-translate-y-0.5 flex items-center justify-center shadow-[0px_4px_6px_rgba(0,0,0,0.5)]">
+                        Talk to your Buddy
+                    </button>
+                </div>
+                <div class="relative h-[400px] md:h-[500px] lg:h-[600px]">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20154-D6DV8s1yPw29v7WFwdjEArlhYUXFIz.png" alt="Friendly mascot character on a skateboard" class="absolute inset-0 w-full h-full object-contain">
+                </div>
+            </div>
+        </section>
+
+        <div class="relative min-h-screen overflow-hidden" style="background-image: url('bg.png'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            <!-- Background Blobs -->
+            <div class="background-blob w-[400px] h-[400px] top-[-100px] left-[-100px]"></div>
+            <div class="background-blob w-[300px] h-[300px] bottom-[-50px] right-[-50px]"></div>
+            <div class="background-blob w-[200px] h-[200px] top-[40%] left-[30%]"></div>
+
+            <!-- Main Content -->
+            <div class="container mx-auto px-4 py-12 relative">
+                <!-- Title -->
+                <h1 class="text-center mb-16 relative z-10">
+                    <span class="block text-6xl md:text-7xl font-black text-black mb-2">Askyla's</span>
+                    <span class="block text-6xl md:text-7xl font-black title-stroke">Superpowers</span>
+                </h1>
+
+                <!-- Feature Cards and Mascot Container -->
+                <div class="relative max-w-5xl mx-auto">
+                    <!-- Mascot Image -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[400px] z-10 mascot">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5%20(1)-I8FL3GOVVR9z4HF2q3fIda4lJLl7bN.png" alt="Askyla Mascot" class="w-full h-auto">
+                    </div>
+
+                    <!-- Feature Cards Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 relative z-2">
+                        <!-- Left Column -->
+                        <div class="space-y-6">
+                            <div class="feature-card" style="box-shadow: 5px 5px 0px #000;">
+                                <h3 class="font-bold text-lg card-font">AI Best Friend, Uniquely Yours</h3>
+                            </div>
+                            <div class="feature-card mt-12 md:mt-24" style="box-shadow: 5px 5px 0px #000;">
+                                <h3 class="font-bold text-lg text-center card-font">Realistic Two <br> Way Friendship</h3>
+                            </div>
+                            <div class="feature-card mt-12 md:mt-24" style="box-shadow: 5px 5px 0px #000;">
+                                <h3 class="font-bold text-lg card-font">Emotionally Responsive</h3>
+                            </div>
+                        </div>
+
+                        <!-- Center Column (Empty for Mascot) -->
+                        <div class="hidden md:block"></div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-6">
+                            <div class="feature-card" style="box-shadow: -5px 5px 0px #000;">
+                                <h3 class="font-bold text-lg card-font">Remember Everything, Always</h3>
+                            </div>
+                            <div class="feature-card mt-12 md:mt-24" style="box-shadow: -5px 5px 0px #000;">
+                                <h3 class="font-bold text-lg card-font">Confidential and Non-Judgemental</h3>
+                            </div>
+                            <div class="feature-card mt-12 md:mt-24" style="box-shadow: -5px 5px 0px #000;">
+                                <h3 class="font-bold text-lg card-font">Always There For You</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="container mx-auto px-4 py-20 bg-white">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <div class="bg-custom-cream p-6 rounded-2xl flex flex-col gap-4">
+                        <div class="flex gap-4">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/placeholder.svg" width="40" height="40" alt="User" class="rounded-full">
+                            <div class="chat-bubble user-bubble">
+                                <p>Arrey yaar, remember last time jab tu aise feel kar raha tha? Tujhe kaise boost mila tha uss waqt?</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 justify-end">
+                            <div class="chat-bubble ai-bubble">
+                                <p>Oh, haan yaar, ab yaad aaya. Tu ne suggest kiya tha ki main apne favorite songs sunoon aur kuch time apne hobbies mein invest karoon.</p>
+                            </div>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20154-D6DV8s1yPw29v7WFwdjEArlhYUXFIz.png" width="40" height="40" alt="AI Buddy" class="rounded-full">
+                        </div>
+                        <div class="flex gap-4">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/placeholder.svg" width="40" height="40" alt="User" class="rounded-full">
+                            <div class="chat-bubble user-bubble">
+                                <p>Arrey yaar, remember last time jab tu aise feel kar raha tha? Tujhe kaise boost mila tha uss waqt?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-bold mb-4">Let's Start A Conversation!</h2>
+                    <p class="mb-6 text-gray-600">Your journey to meaningful conversations begins here. Open up, share, and let your AI buddy be there for every thought and feeling.</p>
+                    <button class="bg-custom-yellow px-8 py-3 rounded-full font-medium border-2 border-black transform transition-transform hover:-translate-y-0.5">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="container mx-auto px-4 py-20">
+            <h2 class="text-4xl font-bold mb-12">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <div class="faq-item">
+                    <button class="flex justify-between items-center w-full">
+                        <span class="font-medium text-lg">What is eBuddy and how does it work?</span>
+                        <div class="faq-toggle">+</div>
+                    </button>
+                    <p class="mt-4 hidden">eBuddy is your AI companion that learns and grows with you, offering genuine friendship and support through natural conversations.</p>
+                </div>
+                <div class="faq-item">
+                    <button class="flex justify-between items-center w-full">
+                        <span class="font-medium text-lg">Is my data safe and confidential with eBuddy?</span>
+                        <div class="faq-toggle">+</div>
+                    </button>
+                    <p class="mt-4 hidden">We prioritize your privacy and security. All conversations are encrypted and stored securely. Your data is never shared with third parties, ensuring a safe and non-judgmental space for you to express yourself.</p>
+                </div>
+                <div class="faq-item">
+                    <button class="flex justify-between items-center w-full">
+                        <span class="font-medium text-lg">Can I customize my AI buddy's appearance and personality?</span>
+                        <div class="faq-toggle">+</div>
+                    </button>
+                    <p class="mt-4 hidden">Yes, you can personalize various aspects of your buddy to match your preferences.</p>
+                </div>
+                <div class="faq-item">
+                    <button class="flex justify-between items-center w-full">
+                        <span class="font-medium text-lg">What platforms is eBuddy available on?</span>
+                        <div class="faq-toggle">+</div>
+                    </button>
+                    <p class="mt-4 hidden">eBuddy is available on iOS, Android, and web platforms.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container mx-auto px-4 py-20">
+            <h2 class="text-4xl font-bold mb-6">We Value Your Feedback!</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <p class="text-gray-600 mb-4">
+                        Your thoughts help us improve and grow. Share your experience or suggestions below!
+                    </p>
+                </div>
+                <form>
+                    <div class="space-y-4">
+                        <input type="email" placeholder="Please enter your email.." class="w-full p-4 border-2 border-black rounded-xl">
+                        <textarea placeholder="If you have any query, please type it in here..." class="w-full h-32 p-4 border-2 border-black rounded-xl"></textarea>
+                        <button type="submit" class="bg-custom-yellow px-8 py-3 rounded-full font-medium border-2 border-black transform transition-transform hover:-translate-y-0.5">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-custom-yellow py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h2 class="text-xl font-bold mb-4">ΔSKYLA</h2>
+                    <p class="font-semibold">+1 (7635) 547-12-97</p>
+                    <p>askylabuddy@gmail.com</p>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#start-chat">Start Chat</a></li>
+                        <li><a href="#faq">FAQ's</a></li>
+                        <li><a href="#feedback">Feedback</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Subscribe</h3>
+                    <div class="flex">
+                        <input type="email" placeholder="Email address" class="flex-1 px-4 py-2 rounded-l-lg border-2 border-r-0 border-black">
+                        <button class="bg-black text-white px-4 py-2 rounded-r-lg border-2 border-black">→</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-black">
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-4">
+                        <a href="#" class="w-8 h-8 flex items-center justify-center border-2 border-black rounded-full hover:bg-black hover:text-white transition-colors">in</a>
+                        <a href="#" class="w-8 h-8 flex items-center justify-center border-2 border-black rounded-full hover:bg-black hover:text-white transition-colors">f</a>
+                        <a href="#" class="w-8 h-8 flex items-center justify-center border-2 border-black rounded-full hover:bg-black hover:text-white transition-colors">t</a>
+                    </div>
+                    <p>© 2024, All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white w-full max-w-[400px] rounded-[32px] shadow-lg overflow-hidden relative">
+            <!-- Close button -->
+            <button onclick="hideAuthModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" title="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <div id="authContent" class="p-6">
+                <!-- Auth content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div id="chatInterface" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white w-full max-w-[400px] h-[600px] rounded-[32px] shadow-lg overflow-hidden flex flex-col">
+            <div class="flex justify-between items-center p-4 bg-white/50 border-b border-gray-200">
+                <h2 class="text-xl font-semibold">Chat</h2>
+                <button id="closeChatBtn" class="text-gray-600 hover:text-gray-900 px-3 py-1 rounded-md">Close</button>
+            </div>
+            <div id="chatArea" class="flex-1 p-4 overflow-y-auto bg-custom-cream">
+                <!-- Chat messages will be dynamically inserted here -->
+            </div>
+            <div class="p-4 bg-white border-t border-gray-200">
+                <div class="flex gap-2 items-center">
+                    <input id="messageInput" type="text" placeholder="Start typing..." class="flex-1 bg-transparent border-0 focus:ring-0 focus:outline-none">
+                    <button id="sendMessageBtn" title="Send Message" class="bg-[#FFB800] hover:bg-[#FFB800]/80 text-black rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const authModal = document.getElementById("authModal");
+        const authContent = document.getElementById("authContent");
+        const loginBtn = document.getElementById("loginBtn");
+        const chatInterface = document.getElementById("chatInterface");
+        const closeChatBtn = document.getElementById("closeChatBtn");
+        const chatArea = document.getElementById("chatArea");
+        const messageInput = document.getElementById("messageInput");
+        const sendMessageBtn = document.getElementById("sendMessageBtn");
+
+        let currentView = "login";
+        let email = "";
+        let messages = [];
+
+        function showAuthModal() {
+            authModal.classList.remove("hidden");
+            renderAuthContent();
+        }
+
+        function hideAuthModal() {
+            authModal.classList.add("hidden");
+        }
+
+        function showChatInterface() {
+            chatInterface.classList.remove("hidden");
+        }
+
+        function hideChatInterface() {
+            chatInterface.classList.add("hidden");
+        }
+
+        function renderAuthContent() {
+            let content = "";
+            if (currentView === "signup") {
+                content = `
+                    <div class="space-y-5">
+                        <div class="flex justify-between mb-4">
+                            <button onclick="setCurrentView('login')" class="text-base font-medium px-6 py-2">Login</button>
+                            <button onclick="setCurrentView('signup')" class="text-base font-medium px-6 py-2 border-b-2 border-black">Signup</button>
+                        </div>
+                        <div class="space-y-5">
+                            <div class="space-y-1.5">
+                                <input id="email" type="email" class="w-full h-12 px-4 rounded-2xl bg-gray-50 border border-gray-200" placeholder="Email">
+                            </div>
+                            <div class="space-y-1.5 relative">
+                                <input id="password" type="password" class="w-full h-12 px-4 rounded-2xl bg-gray-50 border border-gray-200" placeholder="Password">
+                                <button type="button" onclick="togglePassword('password')" class="absolute right-4 top-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="space-y-1.5 relative">
+                                <input id="confirm-password" type="password" class="w-full h-12 px-4 rounded-2xl bg-gray-50 border border-gray-200" placeholder="Confirm Password">
+                                <button type="button" onclick="togglePassword('confirm-password')" class="absolute right-4 top-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500">By continuing, you agree to our <a href="#" class="underline">Terms & Conditions</a> and <a href="#" class="underline">Privacy Policy</a></p>
+                            <button onclick="handleSignup()" class="w-full h-12 bg-[#FFB800] hover:bg-[#FFB800]/90 text-black rounded-full font-medium text-base">
+                                Sign Up
+                            </button>
+                            <div class="relative flex items-center justify-center">
+                                <hr class="w-full border-gray-200" />
+                                <span class="absolute bg-white px-4 text-sm text-gray-500">or</span>
+                            </div>
+                            <button class="w-full h-12 border border-gray-200 rounded-full flex items-center justify-center gap-2">
+                                <img src="google-icon.png" alt="Google" class="w-5 h-5" />
+                                Continue with Google
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (currentView === "forgot") {
+              content = `
+                        <div class="space-y-6">
+                            <h2 class="text-2xl font-bold">Forgot Password?</h2>
+                            <p class="text-gray-600 text-sm">
+                                Enter the email associated with your account, and we'll send you a code to reset your password
+                            </p>
+                            <div class="space-y-1.5">
+                                <label for="reset-email" class="text-sm font-medium">Email</label>
+                                <input id="reset-email" type="email" class="w-full h-12 px-4 rounded-2xl bg-gray-50 border border-gray-200 shadow-sm" placeholder="email@example.com">
+                            </div>
+                            <button onclick="handleForgotPassword()" class="w-full h-12 bg-[#FFB800] hover:bg-[#FFB800]/90 text-black rounded-full font-medium text-base shadow-md hover:shadow-lg transition-shadow">
+                                Send Code
+                            </button>
+                            <button onclick="setCurrentView('login')" class="w-full h-12 rounded-full border border-gray-200 hover:bg-gray-50 font-medium shadow-sm hover:shadow-md transition-shadow">
+                                Go back to login
+                            </button>
+                        </div>
+                    `;
+            } 
+            else if (currentView === "otp") {
+                content = `
+                    <div class="space-y-6">
+                        <button onclick="hideAuthModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <h2 class="text-2xl font-bold text-center">OTP Verification</h2>
+                        <p class="text-gray-600 text-sm text-center">
+                            Enter the verification code we just sent to<br>
+                            <span class="font-medium">${email || "your email"}</span>
+                        </p>
+                        <div class="flex justify-center gap-4">
+                            <input type="text" maxlength="1" class="w-12 h-12 text-center text-lg rounded-xl border border-gray-300 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800]" oninput="moveToNext(this, 0)">
+                            <input type="text" maxlength="1" class="w-12 h-12 text-center text-lg rounded-xl border border-gray-300 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800]" oninput="moveToNext(this, 1)">
+                            <input type="text" maxlength="1" class="w-12 h-12 text-center text-lg rounded-xl border border-gray-300 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800]" oninput="moveToNext(this, 2)">
+                            <input type="text" maxlength="1" class="w-12 h-12 text-center text-lg rounded-xl border border-gray-300 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800]" oninput="moveToNext(this, 3)">
+                            <input type="text" maxlength="1" class="w-12 h-12 text-center text-lg rounded-xl border border-gray-300 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800]" oninput="moveToNext(this, 4)">
+                        </div>
+                        <div class="text-center text-sm">
+                            <span id="timer" class="text-gray-500">00:12 seconds</span>
+                        </div>
+                        <button onclick="handleOtpVerification()" class="w-full h-12 bg-[#FFB800] hover:bg-[#FFB800]/90 text-black rounded-full font-medium">
+                            Verify
+                        </button>
+                        <button onclick="setCurrentView('login')" class="w-full h-12 text-black rounded-full border border-gray-200 font-medium">
+                            ← Go back to login
+                        </button>
+                    </div>
+                `;
+            } else {
+                content = `
+                    <div class="space-y-5">
+                        <div class="flex justify-between mb-4">
+                            <button onclick="setCurrentView('login')" class="text-base font-medium px-6 py-2 border-b-2 border-black">Login</button>
+                            <button onclick="setCurrentView('signup')" class="text-base font-medium px-6 py-2">Signup</button>
+                        </div>
+                        <div class="space-y-5">
+                            <div class="space-y-1.5">
+                                <input id="email" type="email" class="w-full h-12 px-4 rounded-2xl bg-gray-50 border border-gray-200" placeholder="Email">
+                            </div>
+                            <div class="space-y-1.5 relative">
+                                <input id="password" type="password" class="w-full h-12 px-4 rounded-2xl bg-gray-50 border border-gray-200" placeholder="Password">
+                                <button type="button" onclick="togglePassword('password')" class="absolute right-4 top-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </button>
+                            </div>
+                             </div>
+                            <div class="text-right">
+                                <button onclick="setCurrentView('forgot')" class="text-sm text-gray-600 hover:text-gray-900">Forgot Password?</button>
+                            </div>
+                            <button onclick="handleLogin()" class="w-full h-12 bg-[#FFB800] hover:bg-[#FFB800]/90 text-black rounded-full font-medium text-base">
+                                Login
+                            </button>
+                            <div class="relative flex items-center justify-center">
+                                <hr class="w-full border-gray-200" />
+                                <span class="absolute bg-white px-4 text-sm text-gray-500">or</span>
+                            </div>
+                            <button class="w-full h-12 border border-gray-200 rounded-full flex items-center justify-center gap-2">
+                                <img src="google-icon.png" alt="Google" class="w-5 h-5" />
+                                Continue with Google
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            authContent.innerHTML = content;
+        }
+
+        function setCurrentView(view) {
+            currentView = view;
+            renderAuthContent();
+        }
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const type = input.type === 'password' ? 'text' : 'password';
+            input.type = type;
+
+            const button = input.nextElementSibling;
+            const svg = button.querySelector('svg');
+            if (type === 'text') {
+                svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />`;
+            } else {
+                svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
+            }
+        }
+
+        function moveToNext(input, index) {
+            if (input.value.length === input.maxLength) {
+                if (index < 4) {
+                    input.nextElementSibling.focus();
+                } else {
+                    input.blur();
+                }
+            }
+        }
+
+        function handleSignup() {
+            email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Simulate signup process
+            setTimeout(() => {
+                setCurrentView("otp");
+            }, 1000);
+        }
+
+        function handleForgotPassword() {
+          email = document.getElementById("reset-email").value;
+          setCurrentView("otp");
+          startTimer();
+        }
+
+        function handleLogin() {
+            email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Simulate login process
+            setTimeout(() => {
+              hideAuthModal();
+              window.location.href = "chat.html"; // Navigate to chat.html page
+            }, 1000);
+        }
+
+        function handleOtpVerification() {
+            // Simulate OTP verification
+            setTimeout(() => {
+              hideAuthModal();
+              window.location.href = "chat.html"; // Navigate to chat.html page
+            }, 1000);
+        }
+
+        function addMessage(sender, text) {
+            messages.push({ sender, text });
+            renderMessages();
+        }
+
+        function renderMessages() {
+            chatArea.innerHTML = messages.map(message => `
+                <div class="flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} mb-4">
+                    <div class="bg-${message.sender === 'user' ? 'custom-yellow' : 'white'} rounded-lg p-3 max-w-[70%] ${message.sender === 'ai' ? 'border-2 border-black' : ''}">
+                        <p>${message.text}</p>
+                    </div>
+                </div>
+            `).join('');
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                addMessage('user', message);
+                messageInput.value = '';
+                // Simulate AI response
+                setTimeout(() => {
+                    addMessage('ai', 'This is a simulated AI response.');
+                }, 1000);
+            }
+        }
+
+        loginBtn.addEventListener("click", showAuthModal);
+        closeChatBtn.addEventListener("click", hideChatInterface);
+        sendMessageBtn.addEventListener("click", sendMessage);
+        messageInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const button = item.querySelector('button');
+            const content = item.querySelector('p');
+            const toggle = item.querySelector('.faq-toggle');
+
+            button.addEventListener('click', () => {
+                content.classList.toggle('hidden');
+                toggle.textContent = content.classList.contains('hidden') ? '+' : '-';
+            });
+        });
+    </script>
+</body>
+</html>
